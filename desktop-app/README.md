@@ -14,3 +14,7 @@ to this in your browser, and you can call your Go code from devtools.
 ## Building
 
 To build a redistributable, production mode package, use `wails build`.
+
+## Origen
+
+Frontend created with: npm create vite@latest my-svelte-app -- --template svelte-ts
