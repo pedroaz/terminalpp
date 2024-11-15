@@ -13,8 +13,9 @@
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tsconfig/svelte": "^5.0.4",
     "autoprefixer": "^10.4.20",
-    "bits-ui": "^0.21.16",
+    "bits-ui": "1.0.0-next.57",
     "clsx": "^2.1.1",
+    "lucide-svelte": "^0.456.0",
     "svelte": "^5.1.3",
     "svelte-check": "^4.0.5",
     "tailwind-merge": "^2.5.4",
@@ -28,6 +29,7 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.9",
-    "@tailwindcss/typography": "^0.5.15"
+    "@tailwindcss/typography": "^0.5.15",
+    "tailwindcss-animate": "^1.0.7"
   }
 }

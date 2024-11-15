@@ -1,9 +1,18 @@
 <script lang="ts">
-  import { Button } from "$lib/components/ui/button";
+  import AppSidebar from "$lib/components/app-sidebar.svelte";
+  // import { Button } from "$lib/components/ui/button";
+  import * as Sidebar from "$lib/components/ui/sidebar/index.js";
+  import Counter from "./lib/Counter.svelte";
   import "./app.css";
 </script>
 
-<main>
-  <h1>NotePad++</h1>
-  <Button>Click me</Button>
-</main>
+<Sidebar.Provider>
+  <AppSidebar />
+  <main>
+    <Sidebar.Trigger />
+  </main>
+</Sidebar.Provider>
+
+<!-- <main>
+  <AppSidebar />
+</main> -->
