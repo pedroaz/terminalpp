@@ -9,5 +9,6 @@
   "author": {
     "name": "Pedro Azevedo",
     "email": "pedro.azvm@gmail.com"
-  }
+  },
+  "wailsjsdir": "./frontend/src/lib"
 }
