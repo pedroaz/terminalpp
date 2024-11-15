@@ -14,3 +14,9 @@
 		{@render children?.()}
 	</main>
 </Sidebar.Provider>
+
+<style>
+	main {
+		@apply flex h-full w-full flex-col;
+	}
+</style>
