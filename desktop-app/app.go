@@ -3,9 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+
+	"github.com/pedroaz/terminalpp/server"
 )
 
-// App struct
 type App struct {
 	ctx context.Context
 }
@@ -17,8 +18,18 @@ func NewApp() *App {
 
 // startup is called when the app starts. The context is saved
 // so we can call the runtime methods
-func (a *App) startup(ctx context.Context) {
-	a.ctx = ctx
+func (app *App) startup(ctx context.Context) {
+	app.ctx = ctx
+
+	serverCtx := server.NewServerCtx()
+	serverCtx.SocketServer.CreateAndStart(serverCtx)
+
+	// cmdHandler := cmdhandler.CommandHandler{}
+	// socketServer := WebSocketServer{}
+	// socketServer.CreateAndStart(cmdHandler)
+}
+
+func (a *App) shutdown(ctx context.Context) {
 }
 
 // Greet returns a greeting for the given name
