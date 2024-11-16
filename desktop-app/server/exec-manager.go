@@ -13,11 +13,20 @@ type ExecutionManager struct {
 	executions   map[string]Execution
 }
 
+type Line struct {
+	Text string `json:"text"`
+}
+
 type Execution struct {
 	id     string
 	PID    int
 	stdOut []string
 	stdErr []string
+}
+
+type CmdExecutionStart struct {
+	Success bool `json:"success"`
+	PID     int  `json:"pid"`
 }
 
 func NewExecutionManager(socketServer *WebSocketServer) *ExecutionManager {
@@ -27,7 +36,7 @@ func NewExecutionManager(socketServer *WebSocketServer) *ExecutionManager {
 	}
 }
 
-func (manager *ExecutionManager) ExecuteNewCmd(data NewCmdData) NewCmdResponse {
+func (manager *ExecutionManager) ExecuteNewCmd(data SendCmdData) CmdExecutionStart {
 	fmt.Printf("Executing NewCmd with data:  %s\n", data)
 
 	execution := Execution{
@@ -37,25 +46,24 @@ func (manager *ExecutionManager) ExecuteNewCmd(data NewCmdData) NewCmdResponse {
 	manager.executions[execution.id] = execution
 
 	cmd := exec.Command("sh", "-c", data.CmdLine)
+	stdoutPipe, _ := cmd.StdoutPipe()
+
 	cmdError := cmd.Start()
+	if cmdError != nil {
+		fmt.Println("Error starting command:", cmdError)
+		return CmdExecutionStart{Success: false, PID: 0}
+	}
 
-	stdout, cmdError := cmd.StdoutPipe()
-
-	go func() {
-		scanner := bufio.NewScanner(stdout)
+	go func(executionID string) {
+		scanner := bufio.NewScanner(stdoutPipe)
 		for scanner.Scan() {
 			line := scanner.Text()
-			// Process the line as needed. For example, log it or store it.
 			fmt.Println("Stdout:", line)
-			// manager.socketServer.Conn.WriteJSON(line)
+			lineObj := Line{Text: line}
+			res := NewServerResponse(UPDATE_EXECUTION, true, lineObj)
+			manager.socketServer.Conn.WriteJSON(res)
 		}
-		if scanner.Err() != nil {
-			fmt.Println("Error reading stdout:", scanner.Err())
-		}
-	}()
+	}(execution.id)
 
-	if cmdError != nil {
-		return NewCmdResponse{Success: false, PID: 0}
-	}
-	return NewCmdResponse{Success: true, PID: cmd.Process.Pid}
+	return CmdExecutionStart{Success: true, PID: cmd.Process.Pid}
 }

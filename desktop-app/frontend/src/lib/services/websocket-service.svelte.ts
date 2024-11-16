@@ -1,3 +1,5 @@
+import { handleMessage } from './message-handler';
+
 // Singleton Instance
 let websocket: WebSocket | null = null;
 let connected = $state(false);
@@ -19,7 +21,7 @@ function connectWebSocket(): void {
 	};
 
 	websocket.onmessage = (event: MessageEvent) => {
-		console.log('Message received from server:', event.data);
+		handleMessage(event);
 	};
 
 	websocket.onerror = (error: Event) => {
@@ -35,6 +37,7 @@ function connectWebSocket(): void {
 
 function sendMessage(message: any): void {
 	if (websocket && websocket.readyState === WebSocket.OPEN) {
+		console.log('Sending message to server:', message);
 		websocket.send(message);
 	} else {
 		console.warn('WebSocket is not open.');

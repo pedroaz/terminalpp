@@ -2,30 +2,33 @@ package server
 
 import "encoding/json"
 
+// -----------------//
+// Client to Server //
+// -----------------//
 type ClientMessage struct {
-	AppCmd string `json:"appCmd"`
-	Data   json.RawMessage
+	Type MessageType `json:"type"`
+	Data json.RawMessage
 }
 
-type ServerResponse struct {
-	RequestedAppCmd string          `json:"requestedAppCmd"`
-	Success         bool            `json:"success"`
-	Data            json.RawMessage `json:"data"`
-}
-
-func (response ClientMessage) ErrorMessage(err string) ServerResponse {
-	return ServerResponse{
-		RequestedAppCmd: response.AppCmd,
-		Success:         false,
-		Data:            json.RawMessage("{\"error\": \"" + err + "\"}"),
-	}
-}
-
-type NewCmdData struct {
+type SendCmdData struct {
 	CmdLine string `json:"cmdLine"`
 }
 
-type NewCmdResponse struct {
-	Success bool `json:"success"`
-	PID     int  `json:"pid"`
+// -----------------//
+// Server to Client //
+// -----------------//
+
+type ServerResponse struct {
+	Type    MessageType     `json:"type"`
+	Success bool            `json:"success"`
+	Data    json.RawMessage `json:"data"`
+}
+
+func NewServerResponse(t MessageType, success bool, data any) ServerResponse {
+	bytes, _ := json.Marshal(data)
+	return ServerResponse{
+		Type:    t,
+		Success: success,
+		Data:    json.RawMessage(bytes),
+	}
 }

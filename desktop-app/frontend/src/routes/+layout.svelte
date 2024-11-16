@@ -13,12 +13,16 @@
 	<AppSidebar />
 	<main>
 		<Sidebar.Trigger />
-		{@render children?.()}
+		<div>
+			{@render children?.()}
+		</div>
 	</main>
 </Sidebar.Provider>
 
 <style>
 	main {
-		@apply flex h-full w-full flex-col;
+		width: 100%;
+		height: 100vh;
+		/* background-color: red; */
 	}
 </style>
