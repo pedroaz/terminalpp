@@ -10,7 +10,7 @@ type ClientMessage struct {
 	Data json.RawMessage
 }
 
-type SendCmdData struct {
+type UpdateExecutionData struct {
 	CmdLine string `json:"cmdLine"`
 }
 

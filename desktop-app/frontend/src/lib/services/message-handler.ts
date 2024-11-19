@@ -4,9 +4,12 @@ import type { ServerResponse } from './dtos';
 
 export function handleMessage(event: MessageEvent): void {
 	console.log('Message received from server:', event.data);
-	const res = JSON.parse(event.data) as ServerResponse;
+	const res = JSON.parse(event.data) as ServerResponse<any>;
 	switch (res.type) {
 		case MessageType.SEND_CMD_START:
+			handleCmdStart(res);
+			break;
+		case MessageType.UPDATE_EXECUTION:
 			handleCmdStart(res);
 			break;
 		default:

@@ -20,7 +20,7 @@ func (handler *CommandHandler) HandleMsg(msg ClientMessage) ServerResponse {
 
 	switch msg.Type {
 	case SEND_CMD:
-		data := SendCmdData{}
+		data := UpdateExecutionData{}
 		json.Unmarshal(msg.Data, &data)
 		executionData := handler.executionManager.ExecuteNewCmd(data)
 		responseData, _ := json.Marshal(executionData)

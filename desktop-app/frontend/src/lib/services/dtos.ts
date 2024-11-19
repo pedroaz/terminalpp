@@ -1,18 +1,16 @@
 import type { MessageType } from './constants';
 
-export type ServerResponse = {
+export type ServerResponse<T> = {
 	type: MessageType;
 	success: boolean;
-	data: any;
+	data: T;
 };
 
-export type ServerResponseCmdStart = {
-	type: string;
-	success: boolean;
-	data: ServerResponseCmdStartData;
-};
-
-type ServerResponseCmdStartData = {
+export type CmdStartData = {
 	succes: boolean;
 	pid: number;
+};
+
+export type UpdateExecutionData = {
+	cmdLine: string;
 };

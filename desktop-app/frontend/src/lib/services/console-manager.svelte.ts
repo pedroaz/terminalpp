@@ -1,4 +1,4 @@
-import type { ServerResponseCmdStart } from './dtos';
+import type { ServerResponse, CmdStartData } from './dtos';
 import { ConsoleState, type ConsoleInstance } from './models';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -19,11 +19,10 @@ export function getConsole(id: string): ConsoleInstance | undefined {
 	return c;
 }
 
-export function handleCmdStart(message: ServerResponseCmdStart): void {
+export function handleCmdStart(message: ServerResponse<CmdStartData>): void {
 	console.log('New console received:', message);
-	// const newConsole = {
-	// 	id: message.data.id,
-	// 	lines: []
-	// };
-	// consoles.push(newConsole);
+}
+
+export function handleUpdateExecution(message: ServerResponse<CmdStartData>): void {
+	console.log('New console received:', message);
 }

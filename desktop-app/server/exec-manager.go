@@ -36,7 +36,7 @@ func NewExecutionManager(socketServer *WebSocketServer) *ExecutionManager {
 	}
 }
 
-func (manager *ExecutionManager) ExecuteNewCmd(data SendCmdData) CmdExecutionStart {
+func (manager *ExecutionManager) ExecuteNewCmd(data UpdateExecutionData) CmdExecutionStart {
 	fmt.Printf("Executing NewCmd with data:  %s\n", data)
 
 	execution := Execution{
